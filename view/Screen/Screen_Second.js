@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     fontFamily: 'CustomFont',
     color: 'white',
     fontSize: 30,
-
   },
   text_desc_2: {
     fontFamily: 'CustomFont',
