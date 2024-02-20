@@ -1,95 +1,100 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
+import * as Font from 'expo-font';
 
-const PaginaInicio = ({ navigation }) => {
-  const [nombre, setNom] = useState('');
-  const [matricula, setMat] = useState('');
-  const [taskList, setTaskList] = useState([]);
+const customFont = require('../fonts/Jomhuria-Regular.ttf');
 
-  const addTask = () => {
-    if (task !== '') {
-      setTaskList([...taskList, task]);
-      setTask('');
-    }
+export default function PaginaInicio({navigation}) {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  const loadFontAsync = async () => {
+    await Font.loadAsync({
+      CustomFont: customFont,
+    });
+    setFontLoaded(true);
   };
 
+  React.useEffect(() => {
+    loadFontAsync();
+  }, []);
+
+  if (!fontLoaded) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesion</Text>
+      <Text style={styles.text}>ParkingSlot</Text>
+      <Image
+        source={require ('../assets/Logo.png')}
+        style={styles.imagen}
+        />
+              <Text style={styles.title}>INICIA SESION</Text>
+              <View style={styles.container}>
       <TextInput
         style={styles.input}
-        value={nombre}
-        onChangeText={(text) => setNom(text)}
         placeholder="Nombre"
       />
       <TextInput
         style={styles.input}
-        value={matricula}
-        onChangeText={(text) => setMat(text)}
         placeholder="Matricula"
       />
-     <TouchableOpacity style={styles.BotonInicio} onPress={() => navigation.navigate('Inicio')} >
-        <Text>Iniciar</Text> 
-     </TouchableOpacity> 
-     <Text style={styles.texto}>Quieres acceder</Text>
-     <TouchableOpacity style={styles.BotonRegistro} onPress={() => navigation.navigate('PaginaRegistro')} >
-        <Text style={styles.registro}>Registrarte</Text> 
-     </TouchableOpacity> 
-    </View>
+      </View>
+      <TouchableOpacity style={styles.button_individual}>
+        <Text style={styles.buttonText} onPress={() => navigation.navigate('Inicio')}>Inicia</Text>
+      </TouchableOpacity>
+      <StatusBar style="auto" />
+      </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 200,
-    padding: 20,
-    backgroundColor: '#fff',
+    flex: 1,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  text: {
+    fontFamily: 'CustomFont',
+    color: 'white',
+    fontSize: 80,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    marginTop: 30,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#fff'
   },
   input: {
     height: 40,
+    width: 300,
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#fff',
     marginBottom: 10,
     borderRadius: 40,
     textAlign: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff'
+  },
+  imagen: {
+    marginBottom: 40,
+    width: 120, 
+    height: 120 
+  },
+  button_individual: {
+    backgroundColor: 'white',
+    width: '60%',
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 10,
     alignItems: 'center'
   },
-  taskItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    marginTop: 10,
-  },
-  BotonInicio: {
-    height: 40,
-    display:"flex",
-    borderWidth: 1,
-    borderColor: '#4cbd49',
-    borderRadius: 40,
-    textAlign: 'center',
-    backgroundColor: '#4cbd49',
-    alignItems: 'center',
-    justifyContent:"center"
-  },
-  texto:{
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  BotonRegistro:{
-    alignItems: 'center',
-  },
-  registro:{
-    textDecorationLine: 'underline'
+  buttonText: {
+    fontFamily: 'CustomFont',
+    color: 'black',
+    fontSize: 25,
   }
 });
-
-export default PaginaInicio;
