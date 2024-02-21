@@ -1,5 +1,6 @@
 import mysql from 'mysql';
 import dotenv from 'dotenv';
+import chalk from 'chalk';
 
 // Verificar que el proceso no esté en producción.
 if(process.env.NODE !== 'production'){
@@ -13,12 +14,20 @@ const connection = mysql.createConnection({
     database: process.env.DB_NAME,
 });
 
+function printSuccess(message) {
+    console.log(chalk.green(`✓ ${message}`));
+}
+
+function printError(message) {
+    console.error(chalk.red(`✖ ${message}`));
+}
+
 connection.connect(function (error) {
     try {
         if (error) {
-            console.log(`Se ha detectado un error: ${error}`)
+            printError(`Error al conectar a la base de datos: ${error}`);
         } else {
-            console.log("Conexión Exitosa")
+            printSuccess("¡Conexión a la base de datos establecida con éxito!");
         }
     } catch (error) {
         console.error(error);

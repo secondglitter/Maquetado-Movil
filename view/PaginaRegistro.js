@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import * as Font from 'expo-font';
@@ -15,13 +15,21 @@ export default function PaginaRegistro({navigation}) {
     setFontLoaded(true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     loadFontAsync();
   }, []);
 
   if (!fontLoaded) {
     return null;
   }
+
+  //Logica de Registro.
+
+  const Registro = async() => {
+    
+  } 
+
+
 
   return (
     <View style={styles.container}>
