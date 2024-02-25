@@ -20,7 +20,6 @@ User.Register = async(req) => {
         
         db.query(query, [nombre, matricula], (error, results) => {
             if (error) {
-                console.error('Error al registrar usuario:', error);
                 reject('Error al registrar usuario');
             } else {
                 resolve('Usuario registrado exitosamente');
@@ -37,7 +36,6 @@ User.SearchUser = async(req) => {
 
     db.query(query, [id], (error, results) => {
       if(error){
-        console.error('Error al buscar usuario:', error);
         reject('Error al buscar usuario');
       } else {
         resolve(results);
@@ -51,7 +49,6 @@ User.DeleteUser = async (id) => {
     const query = 'DELETE FROM users WHERE id = ?';
     db.query(query, [id], (error, result) => {
       if (error) {
-        console.error('Error al eliminar usuario:', error);
         reject('Error al eliminar usuario');
       } else {
         resolve(result);
@@ -68,7 +65,6 @@ User.UpdateUser = async (req) => {
     const query = 'UPDATE users SET nombre = ?, matricula = ? WHERE id = ?'
     db.query(query, [nombre, matricula, id], (error, result) => {
       if(error) {
-        console.log('Error al actualizar el usuario', error);
         reject('Error al actualizar el usuario');
       } else {
         resolve('¡Usuario Actualizado exitosamente!')

@@ -25,4 +25,26 @@ Auth.Login = (req) => {
     });
 };
 
+Auth.Verify = (req) => {
+    const token = req.body.token;
+    const key = 'secreto';
+    return new Promise((resolve, reject) => {
+        try {
+            const decode = jwt.verify(token, key);
+            const query = 'SELECT * FROM users WHERE id = ?';
+            db.query(query, [decode.id], (err, result) => {
+                if (err) {
+                    console.log('Error al leer datos del usuario', err);
+                    reject('Error al leer datos del usuario');
+                } else {
+                    resolve(result);
+                }
+            });
+        } catch (error) {
+            console.log('Error al verificar el token', error);
+            reject('Error al verificar el token');
+        }
+    });
+};
+
 export default Auth;
