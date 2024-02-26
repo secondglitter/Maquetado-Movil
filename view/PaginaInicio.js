@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import * as Font from 'expo-font';
 import Constants from 'expo-constants';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API = Constants.manifest.extra.API_URL;
+
+const API = Constants.expoConfig.extra.API_URL;
 
 const customFont = require('../fonts/Jomhuria-Regular.ttf');
 
@@ -44,6 +46,7 @@ export default function PaginaInicio({ navigation }) {
         console.log('Respuesta del servidor:', response.data)
       }
     } catch (error) {
+      console.log(API)
       console.error('Error al iniciar sesión:', error);
     }
   };

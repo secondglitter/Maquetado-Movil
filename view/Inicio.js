@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, AsyncStorage } from 'r
 import tw from 'twrnc';
 import Constants from 'expo-constants';
 
-const API = Constants.manifest.extra.API_URL;
+const API = Constants.expoConfig.extra.API_URL;
 
 const App = () => {
   const [ModoOscuro, setModoOscuro] = useState(false);

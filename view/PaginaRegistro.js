@@ -5,7 +5,7 @@ import * as Font from 'expo-font';
 import Constants from 'expo-constants';
 import axios from 'axios';
 
-const API = Constants.manifest.extra.API_URL;
+const API = Constants.expoConfig.extra.API_URL;
 
 const customFont = require('../fonts/Jomhuria-Regular.ttf');
 
@@ -35,6 +35,7 @@ export default function PaginaRegistro({navigation}) {
         nombre,
         matricula
       });
+      console.log(API);
       
       console.log('Respuesta del servidor:', response.data);
       navigation.navigate('PaginaInicio');
