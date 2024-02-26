@@ -35,7 +35,6 @@ export default function PaginaRegistro({navigation}) {
         nombre,
         matricula
       });
-      console.log(API);
       
       console.log('Respuesta del servidor:', response.data);
       navigation.navigate('PaginaInicio');
