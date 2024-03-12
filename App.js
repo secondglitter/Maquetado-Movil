@@ -7,6 +7,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import PaginaInicio from './view/PaginaInicio';
 import PaginaRegistro from './view/PaginaRegistro';
 import Inicio from './view/Inicio';
+import Estacionamiento from './view/Estacionamiento';
+import MiLugar from './view/MiLugar';
 import SI from './view/Screen/Screen_First';
 import SII from './view/Screen/Screen_Second';
 import SIII from './view/Screen/Screen_Three';
@@ -22,6 +24,8 @@ const App = () => {
         <Stack.Screen name="PaginaInicio" component={PaginaInicio} />
         <Stack.Screen name="PaginaRegistro" component={PaginaRegistro} />
         <Stack.Screen name="Inicio" component={Inicio} />
+        <Stack.Screen name="Estacionamiento" component={Estacionamiento} />
+        <Stack.Screen name="MiLugar" component={MiLugar} />
       </Stack.Navigator>
     </NavigationContainer>
   );

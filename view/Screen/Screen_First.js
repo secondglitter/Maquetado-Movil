@@ -43,7 +43,7 @@ export default function SI({navigation}) {
         <Text style={styles.buttonText}>Continuar con Apple</Text>
       </TouchableOpacity>
       <Text style={styles.Log}>¿Ya tienes cuenta?</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('PaginaInicio')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Estacionamiento')}>
       <Text style={styles.Log_2}>Inicia Sesion</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'CustomFont',
     color: 'white',
-    fontSize: 80,
+    fontSize: 50,
   },
   welcome: {
     fontFamily: 'CustomFont',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   ,
   imagen: {
     marginTop: 10,
-    marginBottom: 50,
+    marginBottom: 20,
     width: 120, 
     height: 120 
   },
