@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import * as Font from 'expo-font';
-import Constants from 'expo-constants';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const API = Constants.expoConfig.extra.API_URL;
+const API = "http://10.10.56.9:3000"
 
 const customFont = require('../fonts/Jomhuria-Regular.ttf');
 
