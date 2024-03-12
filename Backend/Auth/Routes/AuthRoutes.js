@@ -6,6 +6,6 @@ const router = express.Router();
 router.post('/Login', AuthController.Login)
 
 // Decodificar el token. 
-router.get('/Verify', AuthController.Verify);
+router.post('/Verify', AuthController.Verify);
 
 export default router;

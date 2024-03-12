@@ -1,15 +1,17 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import tw from 'twrnc';
-import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API = Constants.expoConfig.extra.API_URL;
+const API = "http://10.10.56.9:3000";
 
 const App = () => {
   const [ModoOscuro, setModoOscuro] = useState(false);
   const [usuario, setUsuario] = useState(null);
   const token = AsyncStorage.getItem('token');
+
+  console.log(token);
 
   const toggleModoOscuro = () => {
     setModoOscuro(!ModoOscuro);
