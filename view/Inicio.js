@@ -1,17 +1,24 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import tw from 'twrnc';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import create from 'zustand';
 
-const API = "http://10.10.56.9:3000";
+const API = "http://192.168.100.74:8000";
+
+const useStore = create((set) => ({
+  token: null,
+  usuario: null,
+  setToken: (newToken) => set({ token: newToken }),
+  setUsuario: (newUsuario) => set({ usuario: newUsuario }),
+}));
 
 const App = () => {
-  const [ModoOscuro, setModoOscuro] = useState(false);
-  const [usuario, setUsuario] = useState(null);
-  const token = AsyncStorage.getItem('token');
-
-  console.log(token);
+  const [ModoOscuro, setModoOscuro] = React.useState(false);
+  const token = useStore((state) => state.token);
+  const usuario = useStore((state) => state.usuario);
+  const setUsuario = useStore((state) => state.setUsuario);
+  console.log(token)
 
   const toggleModoOscuro = () => {
     setModoOscuro(!ModoOscuro);

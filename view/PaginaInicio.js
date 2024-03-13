@@ -3,17 +3,22 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import * as Font from 'expo-font';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import create from 'zustand';
 
-
-const API = "http://10.10.56.9:3000"
+const API = "http://192.168.100.74:8000";
 
 const customFont = require('../fonts/Jomhuria-Regular.ttf');
+
+const useStore = create((set) => ({
+  token: null,
+  setToken: (newToken) => set({ token: newToken }),
+}));
 
 export default function PaginaInicio({ navigation }) {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [nombre, setNombre] = useState('');
   const [matricula, setMatricula] = useState('');
+  const setToken = useStore((state) => state.setToken);
 
   const loadFontAsync = async () => {
     await Font.loadAsync({
@@ -39,13 +44,12 @@ export default function PaginaInicio({ navigation }) {
       const token = response.data.token
       if(token) {
         console.log('Respuesta del servidor:', response.data);
-        AsyncStorage.setItem('token', token);
+        setToken(token); 
         navigation.navigate('Inicio');
       } else {
         console.log('Respuesta del servidor:', response.data)
       }
     } catch (error) {
-      console.log(API)
       console.error('Error al iniciar sesión:', error);
     }
   };

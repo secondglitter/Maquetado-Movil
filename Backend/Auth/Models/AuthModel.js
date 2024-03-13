@@ -27,6 +27,7 @@ Auth.Login = (req) => {
 
 Auth.Verify = (req) => {
     const token = req.body.token;
+    console.log(token);
     const key = 'secreto';
     return new Promise((resolve, reject) => {
         try {
