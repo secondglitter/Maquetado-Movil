@@ -43,7 +43,7 @@ export default function SI({navigation}) {
         <Text style={styles.buttonText}>Continuar con Apple</Text>
       </TouchableOpacity>
       <Text style={styles.Log}>¿Ya tienes cuenta?</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Estacionamiento')}>
+      <TouchableOpacity onPress={() => navigation.navigate('PaginaInicio')}>
       <Text style={styles.Log_2}>Inicia Sesion</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
