@@ -2,23 +2,15 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import * as Font from 'expo-font';
-import axios from 'axios';
-import create from 'zustand';
-
-const API = "http://192.168.100.74:8000";
+import { useAuth } from '../view/Auth/Auth'; 
 
 const customFont = require('../fonts/Jomhuria-Regular.ttf');
 
-const useStore = create((set) => ({
-  token: null,
-  setToken: (newToken) => set({ token: newToken }),
-}));
-
 export default function PaginaInicio({ navigation }) {
+  const { login } = useAuth(); 
   const [fontLoaded, setFontLoaded] = useState(false);
   const [nombre, setNombre] = useState('');
   const [matricula, setMatricula] = useState('');
-  const setToken = useStore((state) => state.setToken);
 
   const loadFontAsync = async () => {
     await Font.loadAsync({
@@ -31,28 +23,18 @@ export default function PaginaInicio({ navigation }) {
     loadFontAsync();
   }, []);
 
+  const handleLogin = async () => {
+    const success = await login(nombre, matricula);
+    if (success) {
+      navigation.navigate('Inicio');
+    } else {
+      console.log('Hubo un error')
+    }
+  };
+
   if (!fontLoaded) {
     return null;
   }
-
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post(`${API}/auth/Login`, {
-        nombre,
-        matricula
-      });
-      const token = response.data.token
-      if(token) {
-        console.log('Respuesta del servidor:', response.data);
-        setToken(token); 
-        navigation.navigate('Inicio');
-      } else {
-        console.log('Respuesta del servidor:', response.data)
-      }
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-    }
-  };
 
   return (
     <View style={styles.container}>

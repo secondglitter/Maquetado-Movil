@@ -1,7 +1,7 @@
-// Importa las bibliotecas necesarias
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { AuthProvider } from './view/Auth/Auth'; 
 
 // Importa tus componentes de pantalla
 import PaginaInicio from './view/PaginaInicio';
@@ -18,16 +18,18 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="SI">
-        <Stack.Screen name="SI" component={SI} />
-        <Stack.Screen name="PaginaInicio" component={PaginaInicio} />
-        <Stack.Screen name="PaginaRegistro" component={PaginaRegistro} />
-        <Stack.Screen name="Inicio" component={Inicio} />
-        <Stack.Screen name="Estacionamiento" component={Estacionamiento} />
-        <Stack.Screen name="MiLugar" component={MiLugar} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="SI">
+          <Stack.Screen name="SI" component={SI} />
+          <Stack.Screen name="PaginaInicio" component={PaginaInicio} />
+          <Stack.Screen name="PaginaRegistro" component={PaginaRegistro} />
+          <Stack.Screen name="Inicio" component={Inicio} />
+          <Stack.Screen name="Estacionamiento" component={Estacionamiento} />
+          <Stack.Screen name="MiLugar" component={MiLugar} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 };
 

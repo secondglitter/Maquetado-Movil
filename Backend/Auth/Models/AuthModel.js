@@ -38,7 +38,11 @@ Auth.Verify = (req) => {
                     console.log('Error al leer datos del usuario', err);
                     reject('Error al leer datos del usuario');
                 } else {
-                    resolve(result);
+                    if (result.length === 0) {
+                        reject('No se encontró ningún usuario');
+                    } else {
+                        resolve(result[0]);
+                    }
                 }
             });
         } catch (error) {
