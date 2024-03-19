@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react
 import * as Font from 'expo-font';
 import axios from 'axios';
 
-const API = "http://192.168.100.74:8000"
+const API = "http://10.10.63.121:3000"
 const customFont = require('../fonts/Jomhuria-Regular.ttf');
 
 export default function PaginaRegistro({navigation}) {
