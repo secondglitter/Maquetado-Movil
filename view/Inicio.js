@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import tw from 'twrnc';
 import useUserStore from './Auth/AuthGlobal';
+import MenuModal from './Componente/ModalMenu';
 
 const App = () => {
   const [ModoOscuro, setModoOscuro] = useState(false);

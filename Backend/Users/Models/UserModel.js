@@ -11,22 +11,40 @@ User.getAll = () => {
   });
 };
 
-User.Register = async(req) => {
+User.Register = async (req) => {
   const nombre = req.body.nombre;
   const matricula = parseInt(req.body.matricula);
 
-    return new Promise((resolve, reject) => {
-        const query = 'INSERT INTO users (nombre, matricula) VALUES (?, ?)';
-        
-        db.query(query, [nombre, matricula], (error, results) => {
-            if (error) {
+  return new Promise((resolve, reject) => {
+    const UsuarioRegistrado = "SELECT * FROM users WHERE nombre = ? AND matricula = ?";
+    
+    db.query(UsuarioRegistrado, [nombre, matricula], (error, results) => {
+      if (error) {
+        reject('Error al realizar la consulta de usuario registrado');
+      } else {
+        try {
+          if (results.length > 0) {
+            resolve('Este usuario ya existe');
+          } else {
+            const InsertarUsuario = 'INSERT INTO users (nombre, matricula) VALUES (?, ?)';
+            
+            db.query(InsertarUsuario, [nombre, matricula], (error, results) => {
+              if (error) {
                 reject('Error al registrar usuario');
-            } else {
+              } else {
                 resolve('Usuario registrado exitosamente');
-            }
-        });
+              }
+            });
+          }
+        } catch (error) {
+          console.error(error);
+          reject('Hubo un error');
+        }
+      }
     });
+  });
 };
+
 
 User.SearchUser = async(req) => {
   const id = req.params.id;

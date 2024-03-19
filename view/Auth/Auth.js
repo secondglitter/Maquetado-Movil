@@ -2,11 +2,10 @@ import React, { createContext, useState, useContext } from 'react';
 import axios from 'axios';
 
 const AuthContext = createContext();
-const API = "http://192.168.100.74:8000";
+const API = "http://10.10.63.121:3000";
 import useUserStore from './AuthGlobal';
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
 
   const login = async (nombre, matricula) => {
     try {
@@ -21,13 +20,9 @@ export const AuthProvider = ({ children }) => {
         });
 
         const tokenDecodificado = response.data
-        console.log(tokenDecodificado);
 
-        // Almacenamos el token en el store global de Zustand
         useUserStore.getState().setUserData(tokenDecodificado);
 
-        // Almacenamos el token en el estado local
-        setToken(tokenDecodificado);
         return true; 
       } else {
         return false;
@@ -39,13 +34,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    // Limpiamos el token del store global de Zustand
     useUserStore.getState().setUserData(null);
-    setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AuthContext.Provider value={{ login, logout }}>
       {children}
     </AuthContext.Provider>
   );
