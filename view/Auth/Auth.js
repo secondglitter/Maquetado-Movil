@@ -1,29 +1,23 @@
-import React, { createContext, useState, useContext } from 'react';
-import axios from 'axios';
+import React, { createContext, useContext } from 'react';
+import useUserStore from './AuthGlobal.js';
+import API_Metods from '../API/API.js';
 
 const AuthContext = createContext();
-const API = "http://10.10.63.121:3000";
-import useUserStore from './AuthGlobal';
 
 export const AuthProvider = ({ children }) => {
+  const setUser = useUserStore(state => state.setUserData);
 
   const login = async (nombre, matricula) => {
     try {
-      const response = await axios.post(`${API}/auth/Login`, {
+      const token = await API_Metods.Data_Post('/auth/Login', {
         nombre,
         matricula
       });
-      const token = response.data.token;
+
       if (token) {
-        const response = await axios.post(`${API}/auth/Verify`, {
-            token
-        });
-
-        const tokenDecodificado = response.data
-
-        useUserStore.getState().setUserData(tokenDecodificado);
-
-        return true; 
+        const response = await API_Metods.Data_Post('/auth/Verify', token );
+        setUser(response);
+        return true;
       } else {
         return false;
       }
@@ -34,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    useUserStore.getState().setUserData(null);
+    setUser(null);
   };
 
   return (
@@ -45,5 +39,5 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => {
-    return useContext(AuthContext);
-  };
+  return useContext(AuthContext);
+};

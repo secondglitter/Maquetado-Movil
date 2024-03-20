@@ -25,6 +25,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "apiUrl": "http://10.10.52.122:3000"
   }
 }

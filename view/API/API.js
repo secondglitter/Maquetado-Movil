@@ -1,11 +1,25 @@
 import axios from "axios";
 
 const API = axios.create({
-    url: "http://localhost:3000",
+    baseURL: "http://10.10.52.122:3000"
 });
 
 const API_Metods = {
-    async GetData(endpoint) {
+
+    async Data_Post(endpoint, data){
+        try {
+            if(endpoint){
+                const response = await API.post(endpoint, data);
+                return response.data;
+            } else {
+                console.log('Error en el endpoint, no existe');
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    },
+
+    async Get_Data(endpoint) {
         try {
             if(endpoint) {
                 const response = await API.get(endpoint);
@@ -43,5 +57,18 @@ const API_Metods = {
             console.error(error);   
         }
     },
-    
+    async Patch_Data(endpoint, data) {
+        try {
+            if (endpoint) {
+                const response = await API.patch(endpoint, data);
+                return response.data
+            } else {
+                console.log('Error en tu endpoint, no existe');
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }    
 }
+
+export default API_Metods;
