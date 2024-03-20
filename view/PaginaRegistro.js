@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import * as Font from 'expo-font';
-import axios from 'axios';
+import API_Metods from './API/API'
 
-const API = "http://10.10.63.121:3000"
 const customFont = require('../fonts/Jomhuria-Regular.ttf');
 
 export default function PaginaRegistro({navigation}) {
@@ -29,18 +28,18 @@ export default function PaginaRegistro({navigation}) {
 
   const HandleRegistro = async () => {
     try {
-      const response = await axios.post(`${API}/users/RegisterUser`, {
+      const response = await API_Metods.Data_Post('/users/RegisterUser', {
         nombre,
         matricula
       });
       
-      console.log('Respuesta del servidor:', response.data);
+      console.log('Respuesta del servidor:', response);
       navigation.navigate('PaginaInicio');
     } catch (error) {
       console.error('Error al realizar el registro:', error);
     }
   };
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.text}>ParkingSlot</Text>
