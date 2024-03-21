@@ -14,6 +14,8 @@ CREATE TABLE slot_park (
     user_id CHAR(36), 
     start_time TIME,  
     end_time TIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
     CHECK (start_time < end_time)
 );

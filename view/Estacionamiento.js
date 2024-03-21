@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import ModalMenu from './Componente/ModalMenu'; // Importa el componente ModalMenu desde su ubicación
-
+import API_Metods from './API/API';
 
 
 const CardInformacion = () => {
