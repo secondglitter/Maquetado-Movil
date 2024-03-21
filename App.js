@@ -24,8 +24,8 @@ const App = () => {
           <Stack.Screen name="SI" component={SI} />
           <Stack.Screen name="PaginaInicio" component={PaginaInicio} />
           <Stack.Screen name="PaginaRegistro" component={PaginaRegistro} />
-          <Stack.Screen name="Inicio" component={Inicio} />
-          <Stack.Screen name="Estacionamiento" component={Estacionamiento} />
+          <Stack.Screen name="Inicio" component={Estacionamiento} />
+          <Stack.Screen name="Estacionamiento" component={Inicio} />
           <Stack.Screen name="MiLugar" component={MiLugar} />
         </Stack.Navigator>
       </NavigationContainer>
