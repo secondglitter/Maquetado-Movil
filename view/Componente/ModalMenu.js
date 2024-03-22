@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, Modal, Image, TouchableHighlight } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; 
+import tw from 'twrnc';
+import useUserStore from '../Auth/AuthGlobal';
 
 
 const MenuModal = ({ menuOpen, toggleMenu }) => {
   const navigation = useNavigation();
+  const userData = useUserStore((state) => state.userData);
 
   const navigateToInicio = () => {
     navigation.navigate('Estacionamiento'); 
@@ -30,10 +33,14 @@ const MenuModal = ({ menuOpen, toggleMenu }) => {
       onRequestClose={toggleMenu}>
       <View style={styles.menuModal}>
         <Image
-          source={{ uri: 'https://via.placeholder.com/150' }}
+          source={require('../../assets/users.png')}
           style={styles.menuImage}
         />
 
+<View style={tw` items-center`}>
+            <Text style={tw`text-xl font-bold text-white`}>{userData.nombre}</Text>
+            <Text style={tw`text-sm text-white`}>{userData.matricula}</Text>
+          </View>
         <TouchableHighlight
           style={styles.menuItem}
           onPress={navigateToInicio}
@@ -70,37 +77,36 @@ const styles = {
     menuIcon: {
         position: 'absolute',
         left: 10,
-        top: 5,
+        top: 10,
         zIndex: 1,
       },
       menuText: {
-        fontSize: 25,
+        fontSize: 19,
         color: 'white',
+        top: 50,
         marginBottom: 40,
+        marginLeft: 9,
+        textTransform: 'uppercase',
       },
       menuModal: {
         flex: 1,
         justifyContent: 'flex-start',
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        paddingTop: '40%',
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        paddingTop: '20%',
         width: '70%', 
-        borderRightWidth: 4, 
-        borderColor: 'red', 
       },
       menuImage: {
-        width: 100, 
-        height: 100, 
-        marginBottom: 20, 
+        width: 120, 
+        height: 120, 
+        marginBottom: 10,
+        left:89,
+        borderRadius:100
+
       },
       closeIcon: {
         position: 'absolute',
-        top: 10,
-        right: 10,
-      },
-      closeIcon: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
+        top: 50,
+        right: 15,
       },
 };
 

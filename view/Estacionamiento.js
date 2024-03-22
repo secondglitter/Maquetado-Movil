@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 25,
     color: 'white',
-    marginBottom: 40,
+    top:15
   },
   
 });
