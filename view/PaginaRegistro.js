@@ -61,6 +61,10 @@ export default function PaginaRegistro({navigation}) {
           value={matricula}
           onChangeText={setMatricula}
         />
+         <Text style={styles.Log}>¿Ya tienes cuenta?</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('PaginaInicio')}>
+      <Text style={styles.Log_2}>Inicia Sesion</Text>
+      </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.button_individual} onPress={HandleRegistro}>
         <Text style={styles.buttonText}>Registrar</Text>
@@ -81,6 +85,18 @@ const styles = StyleSheet.create({
     fontFamily: 'CustomFont',
     color: 'white',
     fontSize: 80,
+  },
+  Log:{
+    fontFamily: 'CustomFont',
+    color: 'white',
+    fontSize: 40,
+  },
+  Log_2:{
+    fontFamily: 'CustomFont',
+    color: 'white',
+    fontSize: 40,
+    marginBottom:17,
+    textDecorationLine: 'underline'
   },
   title: {
     fontSize: 24,

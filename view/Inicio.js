@@ -4,14 +4,10 @@ import tw from 'twrnc';
 import useUserStore from './Auth/AuthGlobal';
 import MenuModal from './Componente/ModalMenu';
 
-const App = () => {
+const App = ({navigation}) => {
   const [ModoOscuro, setModoOscuro] = useState(false);
   const userData = useUserStore((state) => state.userData);
 
-  
-  const toggleModoOscuro = () => {
-    setModoOscuro(!ModoOscuro);
-  };
 
   return (
     <View style={[tw`flex-1 justify-center items-center`, ModoOscuro ? tw`bg-gray-400` : tw`bg-white`]}>
@@ -22,13 +18,13 @@ const App = () => {
           source={require('../assets/imagen.jpeg')}
         />
 
-          <View style={tw`py-5 items-center`}>
-            <Text style={tw`text-xl font-bold text-gray-800 dark:text-white`}>{userData.nombre}</Text>
-            <Text style={tw`text-sm text-gray-700 dark:text-gray-200`}>{userData.matricula}</Text>
-          </View>
+        <View style={tw`py-5 items-center`}>
+          <Text style={tw`text-xl font-bold text-gray-800 dark:text-white`}>{userData.nombre}</Text>
+          <Text style={tw`text-sm text-gray-700 dark:text-gray-200`}>{userData.matricula}</Text>
+        </View>
 
-        <TouchableOpacity onPress={toggleModoOscuro} style={tw`bg-gray-500 px-4 py-2 rounded-md mb-4`}>
-          <Text style={tw`text-white`}>Cambiar fondo</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Inicio')} style={tw`bg-gray-500 px-4 py-2 rounded-md mb-4`}>
+          <Text style={tw`text-white`} >Volver</Text>
         </TouchableOpacity>
       </View>
     </View>
