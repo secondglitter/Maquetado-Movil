@@ -1,17 +1,16 @@
-
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  Modal,
-  Image,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import ModalMenu from './Componente/ModalMenu'; // Importa el componente ModalMenu desde su ubicación
-import API_Metods from './API/API';
 
+const ParkingSpace = ({ id, occupied }) => {
+  return (
+    <View style={[styles.parkingSpace, occupied ? styles.occupiedSpace : styles.vacantSpace]}>
+      <FontAwesome name="car" size={30} color={occupied ? 'red' : 'green'} />
+      <Text style={styles.spaceInfo}>Slot {id}</Text>
+    </View>
+  );
+};
 
 const CardInformacion = () => {
   return (
@@ -24,19 +23,19 @@ const CardInformacion = () => {
 };
 
 const ParkingLot = () => {
-  const [menuOpen, setMenuOpen] = useState(false); 
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const parkingSpaces = [
-    { id: 1, information: 'Slot 1', occupied: false },
-    { id: 2, information: 'Slot 2', occupied: true },
-    { id: 3, information: 'Slot 3', occupied: false },
-    { id: 4, information: 'Slot 4', occupied: true },
-    { id: 5, information: 'Slot 5', occupied: false },
-    { id: 6, information: 'Slot 6', occupied: false },
-    { id: 7, information: 'Slot 7', occupied: true },
-    { id: 8, information: 'Slot 8', occupied: false },
-    { id: 9, information: 'Slot 9', occupied: true },
-    { id: 10, information: 'Slot 10', occupied: false },
+    { id: 1, occupied: false },
+    { id: 2, occupied: true },
+    { id: 3, occupied: false },
+    { id: 4, occupied: true },
+    { id: 5, occupied: false },
+    { id: 6, occupied: false },
+    { id: 7, occupied: true },
+    { id: 8, occupied: false },
+    { id: 9, occupied: true },
+    { id: 10, occupied: false },
   ];
 
   const toggleMenu = () => {
@@ -52,36 +51,22 @@ const ParkingLot = () => {
       </TouchableWithoutFeedback>
       <Text style={styles.title}>Estacionamiento</Text>
       <View style={styles.parkingLot}>
-        <View style={styles.column}>
-          {parkingSpaces.slice(0, 5).map((space) => (
-            <View
-              key={space.id}
-              style={[
-                styles.parkingSpace,
-                space.occupied ? styles.occupiedSpace : styles.vacantSpace,
-              ]}>
-              <Text style={styles.spaceInfo}>{space.information}</Text>
-            </View>
-          ))}
+        <View style={styles.pavement}>
+          {/* Líneas horizontales */}
+          <View style={[styles.line, styles.horizontalLine, { top: '25%' }]} />
+          <View style={[styles.line, styles.horizontalLine, { top: '50%' }]} />
+          <View style={[styles.line, styles.horizontalLine, { top: '75%' }]} />
+          {/* Líneas verticales */}
+          <View style={[styles.line, styles.verticalLine, { left: '25%' }]} />
+          <View style={[styles.line, styles.verticalLine, { left: '50%' }]} />
+          <View style={[styles.line, styles.verticalLine, { left: '75%' }]} />
         </View>
-        <View style={styles.street} />
-        <View style={styles.column}>
-          {parkingSpaces.slice(5).map((space) => (
-            <View
-              key={space.id}
-              style={[
-                styles.parkingSpace,
-                space.occupied ? styles.occupiedSpace : styles.vacantSpace,
-              ]}>
-              <Text style={styles.spaceInfo}>{space.information}</Text>
-            </View>
-          ))}
-        </View>
+        {parkingSpaces.map(space => (
+          <ParkingSpace key={space.id} id={space.id} occupied={space.occupied} />
+        ))}
       </View>
       <CardInformacion />
-      
       <ModalMenu menuOpen={menuOpen} toggleMenu={toggleMenu} />
-
     </View>
   );
 };
@@ -106,34 +91,31 @@ const styles = StyleSheet.create({
   },
   parkingLot: {
     flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: 'black',
-    borderRadius: 3,
-    borderWidth: 1,
-    backgroundColor: '#bdbdbd',
-  },
-  column: {
-    flexDirection: 'column',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    position: 'relative',
   },
   parkingSpace: {
     width: 100,
-    height: 55,
-    margin: 15,
-    borderColor: 'black',
-    borderWidth: 2,
-    textTransform: 'uppercase',
-    justifyContent: 'center',
+    height: 100,
+    margin: 10,
     alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    borderWidth: 2,
+    position: 'relative',
+    zIndex: 1,
   },
   vacantSpace: {
-    backgroundColor: 'green',
+    borderColor: 'green',
   },
   occupiedSpace: {
-    backgroundColor: 'red',
+    borderColor: 'red',
   },
   spaceInfo: {
-    color: 'white',
     fontWeight: 'bold',
+    position: 'absolute',
+    bottom: 5,
   },
   card: {
     backgroundColor: 'black',
@@ -168,9 +150,27 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 25,
     color: 'white',
-    top:15
+    top: 15,
   },
-  
+  pavement: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black',
+    opacity: 0.8,
+  },
+  line: {
+    position: 'absolute',
+    backgroundColor: 'yellow',
+  },
+  horizontalLine: {
+    width: '100%',
+    height: 2,
+  },
+  verticalLine: {
+    height: '100%',
+    width: 2,
+  },
 });
 
 export default ParkingLot;

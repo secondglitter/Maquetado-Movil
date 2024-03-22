@@ -1,4 +1,4 @@
-CREATE DATABASE usa_el_nombre_a_tu_gusto;
+CREATE DATABASE parkingslot;
 
 USE parkingslot;
 CREATE TABLE users (
