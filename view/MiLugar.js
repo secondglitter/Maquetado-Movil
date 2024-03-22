@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   View,
@@ -8,8 +7,10 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import ModalMenu from './Componente/ModalMenu'; 
+import useUserStore from './Auth/AuthGlobal';
 
 const CarGif = () => {
+  const userData = useUserStore((state) => state.userData);
     return (
       <View style={styles.gifContainer}>
         <Image
@@ -17,7 +18,7 @@ const CarGif = () => {
           style={styles.gif}
           resizeMode="contain" 
         />
-              <Text style={styles.gifContainer}>Usuario: José</Text>
+              <Text style={styles.gifContainer}>Usuario: {userData.nombre}</Text>
 
       </View>
     );
