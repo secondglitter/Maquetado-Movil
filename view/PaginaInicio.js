@@ -57,7 +57,12 @@ export default function PaginaInicio({ navigation }) {
           value={matricula}
           onChangeText={setMatricula}
         />
+        <Text style={styles.welcome}>¿ERES NUEVO? </Text>
+        <TouchableOpacity>
+        <Text style={styles.welcome_2} onPress={() => navigation.navigate('PaginaRegistro')}>REGISTRATE</Text>
+        </TouchableOpacity>
       </View>
+      
       <TouchableOpacity style={styles.button_individual} onPress={handleLogin}>
         <Text style={styles.buttonText}>Iniciar</Text>
       </TouchableOpacity>
@@ -68,6 +73,7 @@ export default function PaginaInicio({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'center',
@@ -77,6 +83,18 @@ const styles = StyleSheet.create({
     fontFamily: 'CustomFont',
     color: 'white',
     fontSize: 80,
+  },
+  welcome: {
+    fontFamily: 'CustomFont',
+    color: 'white',
+    fontSize: 40,
+  },
+  welcome_2: {
+    fontFamily: 'CustomFont',
+    color: 'white',
+    fontSize: 40,
+    marginBottom: 20,
+    textDecorationLine: 'underline'
   },
   title: {
     fontSize: 24,

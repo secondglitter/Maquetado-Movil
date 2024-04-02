@@ -20,13 +20,12 @@ const App = () => {
   return (
     <AuthProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="SI">
-          <Stack.Screen name="SI" component={SI} />
-          <Stack.Screen name="PaginaInicio" component={PaginaInicio} />
-          <Stack.Screen name="PaginaRegistro" component={PaginaRegistro} />
-          <Stack.Screen name="Inicio" component={Estacionamiento} />
-          <Stack.Screen name="Estacionamiento" component={Inicio} />
-          <Stack.Screen name="MiLugar" component={MiLugar} />
+        <Stack.Navigator initialRouteName="PaginaInicio" >
+          <Stack.Screen name="PaginaInicio" options={{headerShown:false}} component={PaginaInicio} />
+          <Stack.Screen name="PaginaRegistro" options={{headerShown:false}} component={PaginaRegistro} />
+          <Stack.Screen name="Inicio" options={{headerShown:false}} component={Estacionamiento} />
+          <Stack.Screen name="Estacionamiento" options={{headerShown:false}} component={Inicio} />
+          <Stack.Screen name="MiLugar" options={{headerShown:false}} component={MiLugar} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
