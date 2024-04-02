@@ -1,16 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
   Text,
-  Modal,
-  Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import ModalMenu from './Componente/ModalMenu'; // Importa el componente ModalMenu desde su ubicación
-import API_Metods from './API/API';
+import ModalMenu from './Componente/ModalMenu';
 
 
 const CardInformacion = () => {
@@ -90,8 +86,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 20,
     backgroundColor: '#FFFFFF',
+    top:32
   },
   title: {
     fontSize: 20,
@@ -105,6 +101,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   parkingLot: {
+    top:40,
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: 'black',
@@ -116,8 +113,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   parkingSpace: {
-    width: 100,
-    height: 55,
+    width: 140,
+    height: 70,
     margin: 15,
     borderColor: 'black',
     borderWidth: 2,
@@ -149,6 +146,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 5,
     elevation: 5,
+    top:80
   },
   cardText: {
     color: 'white',
@@ -168,7 +166,7 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 25,
     color: 'white',
-    top:15
+    top:17
   },
   
 });
