@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; 
 import tw from 'twrnc';
 import useUserStore from '../Auth/AuthGlobal';
+import { AuthProvider } from '../Auth/Auth';
 
 
 const MenuModal = ({ menuOpen, toggleMenu }) => {
@@ -79,7 +80,11 @@ const styles = {
         left: 10,
         top: 10,
         zIndex: 1,
+      }, 
+      menuItem: {
+        top:10
       },
+
       menuText: {
         fontSize: 19,
         color: 'white',
