@@ -12,6 +12,7 @@ import MiLugar from './view/MiLugar';
 import SI from './view/Screen/Screen_First';
 import SII from './view/Screen/Screen_Second';
 import SIII from './view/Screen/Screen_Three';
+import 'react-native-gesture-handler';
 
 // Crea una pila de navegación
 const Stack = createStackNavigator();

@@ -44,7 +44,6 @@ export default function PaginaInicio({ navigation }) {
         style={styles.imagen}
       />
       <Text style={styles.title}>INICIA SESION</Text>
-      <View style={styles.container}>
         <TextInput
           style={styles.input}
           placeholder="Nombre"
@@ -61,7 +60,6 @@ export default function PaginaInicio({ navigation }) {
         <TouchableOpacity>
         <Text style={styles.welcome_2} onPress={() => navigation.navigate('PaginaRegistro')}>REGISTRATE</Text>
         </TouchableOpacity>
-      </View>
       
       <TouchableOpacity style={styles.button_individual} onPress={handleLogin}>
         <Text style={styles.buttonText}>Iniciar</Text>
@@ -83,25 +81,29 @@ const styles = StyleSheet.create({
     fontFamily: 'CustomFont',
     color: 'white',
     fontSize: 80,
+    top:80
   },
   welcome: {
     fontFamily: 'CustomFont',
     color: 'white',
     fontSize: 40,
+    top:120
   },
   welcome_2: {
     fontFamily: 'CustomFont',
     color: 'white',
     fontSize: 40,
     marginBottom: 20,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    top:120
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#fff'
+    color: '#fff',
+    top:90,
   },
   input: {
     height: 40,
@@ -109,15 +111,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
     marginBottom: 10,
-    borderRadius: 40,
+    borderRadius: 5,
     textAlign: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    top:100,
   },
   imagen: {
     marginBottom: 40,
     width: 120,
-    height: 120
+    height: 120,
+    top:82
   },
   button_individual: {
     backgroundColor: 'white',
@@ -125,7 +129,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     borderRadius: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    top: 250
   },
   buttonText: {
     fontFamily: 'CustomFont',

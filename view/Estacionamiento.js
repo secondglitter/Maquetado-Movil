@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 32,
     backgroundColor: '#FFFFFF',
+    top:32
   },
   title: {
     fontSize: 20,
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   parkingLot: {
+    top:40,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 5,
     elevation: 5,
+    top:80
   },
   cardText: {
     color: 'white',
