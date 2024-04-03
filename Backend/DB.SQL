@@ -9,7 +9,7 @@ CREATE TABLE users (
 
 CREATE TABLE slot_park (
     id CHAR(36) PRIMARY KEY DEFAULT UUID(),
-    slot_id INT NOT NULL,
+    slot_id CHAR(36) NOT NULL,
     occupied BOOLEAN,
     user_id CHAR(36), 
     start_time TIME,  
@@ -17,5 +17,13 @@ CREATE TABLE slot_park (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (slot_id) REFERENCES slots(id),
     CHECK (start_time < end_time)
+);
+
+CREATE TABLE slots (
+    id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+    slot_name VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

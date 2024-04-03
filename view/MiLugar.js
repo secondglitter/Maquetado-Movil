@@ -19,7 +19,7 @@ const CarGif = () => {
           resizeMode="contain" 
         />
               <Text style={styles.gifContainer}>Usuario: {userData.nombre}</Text>
-
+              <Text style={styles.gifContainer}>Matricula: {userData.matricula}</Text>
       </View>
     );
   };
@@ -63,7 +63,9 @@ const ParkingLot = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    top:32,
     backgroundColor: '#FFFFFF',
+    top:32
   },
   title: {
     fontSize: 20,
@@ -78,16 +80,13 @@ const styles = StyleSheet.create({
   },
   gifContainer: {
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 80, 
-    
+    alignItems: 'center', 
     fontWeight: 'bold',
-
-       
   },
   gif: {
     width: 300, 
     height: 200,
+    marginBottom: 50,
   },
   
   card: {
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 25,
     color: 'white',
-    marginBottom: 40,
+    top:17
   },
   
 });

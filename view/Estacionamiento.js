@@ -1,42 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import ModalMenu from './Componente/ModalMenu'; // Importa el componente ModalMenu desde su ubicación
+import API_Metods from './API/API.js';
 
-const ParkingSpace = ({ id, occupied }) => {
+const ParkingSpace = ({ slot_name, occupied }) => {
   return (
     <View style={[styles.parkingSpace, occupied ? styles.occupiedSpace : styles.vacantSpace]}>
       <FontAwesome name="car" size={30} color={occupied ? 'red' : 'green'} />
-      <Text style={styles.spaceInfo}>Slot {id}</Text>
+      <Text style={styles.spaceInfo}>{slot_name}</Text>
     </View>
   );
 };
 
-const CardInformacion = () => {
+const CardInformacion = ({ occupiedCount, totalCount }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.cardText}>Estado del estacionamiento</Text>
-      <Text style={styles.cardTextinfo}>Lugares ocupados: 4</Text>
-      <Text style={styles.cardTextinfo}>Lugares disponibles: 6</Text>
+      <Text style={styles.cardTextinfo}>Lugares ocupados: {occupiedCount}</Text>
+      <Text style={styles.cardTextinfo}>Lugares disponibles: {totalCount - occupiedCount}</Text>
     </View>
   );
 };
 
 const ParkingLot = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [parkingSpaces, setParkingSpaces] = useState([]);
 
-  const parkingSpaces = [
-    { id: 1, occupied: false },
-    { id: 2, occupied: true },
-    { id: 3, occupied: false },
-    { id: 4, occupied: true },
-    { id: 5, occupied: false },
-    { id: 6, occupied: false },
-    { id: 7, occupied: true },
-    { id: 8, occupied: false },
-    { id: 9, occupied: true },
-    { id: 10, occupied: false },
-  ];
+  const fetchParkingData = async () => {
+    try {
+      const response = await API_Metods.Get_Data('/slot/getAll');
+      setParkingSpaces(response);
+      console.log(response);
+    } catch (error) {
+      console.error('Error al obtener los datos de estacionamiento:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchParkingData();
+    const intervalId = setInterval(fetchParkingData, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -50,22 +55,27 @@ const ParkingLot = () => {
         </View>
       </TouchableWithoutFeedback>
       <Text style={styles.title}>Estacionamiento</Text>
-      <View style={styles.parkingLot}>
-        <View style={styles.pavement}>
-          {/* Líneas horizontales */}
-          <View style={[styles.line, styles.horizontalLine, { top: '25%' }]} />
-          <View style={[styles.line, styles.horizontalLine, { top: '50%' }]} />
-          <View style={[styles.line, styles.horizontalLine, { top: '75%' }]} />
-          {/* Líneas verticales */}
-          <View style={[styles.line, styles.verticalLine, { left: '25%' }]} />
-          <View style={[styles.line, styles.verticalLine, { left: '50%' }]} />
-          <View style={[styles.line, styles.verticalLine, { left: '75%' }]} />
+      <View style={styles.contentContainer}>
+        <View style={styles.parkingLot}>
+          <View style={styles.pavement}>
+            <View style={[styles.line, styles.horizontalLine, { top: '25%' }]} />
+            <View style={[styles.line, styles.horizontalLine, { top: '50%' }]} />
+            <View style={[styles.line, styles.horizontalLine, { top: '75%' }]} />
+            <View style={[styles.line, styles.verticalLine, { left: '25%' }]} />
+            <View style={[styles.line, styles.verticalLine, { left: '50%' }]} />
+            <View style={[styles.line, styles.verticalLine, { left: '75%' }]} />
+          </View>
+          <View style={styles.parkingSpacesContainer}>
+            {parkingSpaces.map(space => (
+              <ParkingSpace key={space.id} slot_name={space.slot_name} occupied={space.occupied} />
+            ))}
+          </View>
         </View>
-        {parkingSpaces.map(space => (
-          <ParkingSpace key={space.id} id={space.id} occupied={space.occupied} />
-        ))}
       </View>
-      <CardInformacion />
+      <CardInformacion
+          occupiedCount={parkingSpaces.filter(space => space.occupied).length}
+          totalCount={parkingSpaces.length}
+        />
       <ModalMenu menuOpen={menuOpen} toggleMenu={toggleMenu} />
     </View>
   );
@@ -75,8 +85,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 32,
     backgroundColor: '#FFFFFF',
+    top:32
   },
   title: {
     fontSize: 20,
@@ -89,11 +100,23 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '100%',
   },
+  contentContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
   parkingLot: {
+    top:40,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
     position: 'relative',
+  },
+  parkingSpacesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   parkingSpace: {
     width: 100,
@@ -131,6 +154,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 5,
     elevation: 5,
+    top:80
   },
   cardText: {
     color: 'white',
