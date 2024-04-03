@@ -63,6 +63,7 @@ const ParkingLot = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    top:32,
     backgroundColor: '#FFFFFF',
   },
   title: {

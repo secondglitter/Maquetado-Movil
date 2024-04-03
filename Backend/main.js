@@ -1,11 +1,12 @@
 import app from './Connection/app.js';
 import userRoutes from './Users/Routes/UserRoutes.js';
 import authRoutes from './Auth/Routes/AuthRoutes.js'
-import websocketRoutes from './WebSocket/Routes/WebSocketRoutes.js'
+import slotRoutes from './Slot/Routes/SlotRoutes.js'
 import chalk from 'chalk';
 
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/slot', slotRoutes);
 
 
 function obtenerRutas(router, prefix = '') {
@@ -34,6 +35,9 @@ app.listen(PORT, () => {
   console.log("");
   console.log(chalk.red('Ruta de /auth:'));
   console.log(obtenerRutas(authRoutes).map(route => chalk.red(route)).join('\n'));
+  console.log("");
+  console.log(chalk.white('Ruta de /slot:'));
+  console.log(obtenerRutas(slotRoutes).map(route => chalk.white(route)).join('\n'));
   console.log("");
   console.log(chalk.green(`✓ Servidor Iniciado en el puerto ${PORT}`));
 });

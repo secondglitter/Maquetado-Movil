@@ -21,10 +21,10 @@ const App = () => {
     <AuthProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="PaginaInicio" >
-          <Stack.Screen name="PaginaInicio" options={{headerShown:false}} component={PaginaInicio} />
+          <Stack.Screen name="PaginaInicio" options={{headerShown:false}} component={Estacionamiento} />
           <Stack.Screen name="PaginaRegistro" options={{headerShown:false}} component={PaginaRegistro} />
           <Stack.Screen name="Inicio" options={{headerShown:false}} component={Estacionamiento} />
-          <Stack.Screen name="Estacionamiento" options={{headerShown:false}} component={Inicio} />
+          <Stack.Screen name="Estacionamiento" options={{headerShown:false}} component={Estacionamiento} />
           <Stack.Screen name="MiLugar" options={{headerShown:false}} component={MiLugar} />
         </Stack.Navigator>
       </NavigationContainer>

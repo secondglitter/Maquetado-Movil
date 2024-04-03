@@ -20,7 +20,10 @@ const MenuModal = ({ menuOpen, toggleMenu }) => {
     navigation.navigate('MiLugar');
     toggleMenu();
   }
+
   const navigateToCerrrarSesion = () => {
+    const useLogout = useUserStore.logout();
+    useLogout();
     navigation.navigate('SI');
     toggleMenu();
   }
@@ -82,13 +85,13 @@ const styles = {
         zIndex: 1,
       }, 
       menuItem: {
-        top:10
+        top:40
       },
 
       menuText: {
         fontSize: 19,
         color: 'white',
-        top: 50,
+        top: 20,
         marginBottom: 40,
         marginLeft: 9,
         textTransform: 'uppercase',
