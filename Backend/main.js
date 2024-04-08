@@ -8,7 +8,6 @@ app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/slot', slotRoutes);
 
-
 function obtenerRutas(router, prefix = '') {
   const routes = [];
   router.stack.forEach((middleware) => {
@@ -23,7 +22,6 @@ function obtenerRutas(router, prefix = '') {
   return routes;
 }
 
-// Puerto de Escucha viene de la variable global.
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   
