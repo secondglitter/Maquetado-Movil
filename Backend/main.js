@@ -1,12 +1,54 @@
-import app from './Connection/app.js';
-import userRoutes from './Users/Routes/UserRoutes.js';
-import authRoutes from './Auth/Routes/AuthRoutes.js'
-import slotRoutes from './Slot/Routes/SlotRoutes.js'
+import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
+import { SerialPort } from 'serialport';
+import { DelimiterParser } from '@serialport/parser-delimiter';
 import chalk from 'chalk';
+import db from "./Connection/db.js"
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+// Definir las rutas de tu aplicación
+import userRoutes from './Users/Routes/UserRoutes.js';
+import authRoutes from './Auth/Routes/AuthRoutes.js';
+import slotRoutes from './Slot/Routes/SlotRoutes.js';
 
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/slot', slotRoutes);
+
+const port = new SerialPort({
+  path: '/dev/ttyUSB0',
+  baudRate:9600
+});
+const parser = port.pipe(new DelimiterParser({ delimiter: '\r\n' }));
+
+parser.on("open", () => {
+  console.log("Conexión abierta con el puerto serial");
+});
+
+parser.on('data', (data) => {
+  const decoder = new TextDecoder();
+  const dataArray = new Uint8Array(data);
+  const ready = decoder.decode(dataArray);
+  console.log('Datos recibidos desde Arduino:', ready);
+
+      const query = "INSERT INTO test (texto) VALUES(?)";
+      db.query(query, [ready], (err, result) => {
+          if (err) {
+              console.error('Error al insertar en la base de datos:', err);
+          } else {
+              console.log('Datos insertados en la base de datos:', result);
+          }
+      });
+});
+
+
+parser.on("error", (err) => {
+  console.log("Error en la comunicación serial:", err);
+});
 
 function obtenerRutas(router, prefix = '') {
   const routes = [];
@@ -23,8 +65,7 @@ function obtenerRutas(router, prefix = '') {
 }
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  
+server.listen(PORT, () => {
   console.log("");
   console.log(chalk.yellow('Rutas activas:'));
   console.log("");
