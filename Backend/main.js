@@ -35,16 +35,37 @@ parser.on('data', (data) => {
   const ready = decoder.decode(dataArray);
   console.log('Datos recibidos desde Arduino:', ready);
 
-      const query = "INSERT INTO test (texto) VALUES(?)";
-      db.query(query, [ready], (err, result) => {
-          if (err) {
-              console.error('Error al insertar en la base de datos:', err);
-          } else {
-              console.log('Datos insertados en la base de datos:', result);
-          }
-      });
-});
+  switch (ready) {
+    case "Slot1":
+        Slot1(ready);
+      break;
+  
+    default:
+      break;
+  }
+})
 
+function Slot1(ready) {
+  if(ready === "Ocupado") {
+  const sql = "UPDATE slot_park SET occupied = 1 WHERE slot_name = 'Slot1'";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error("Error al marcar el slot como ocupado:", err);
+    } else {
+      console.log("Slot1 marcado como ocupado en la base de datos");
+    }
+  })
+  } else {
+    const sql = "UPDATE slot_park SET occupied = 0 WHERE slot_name = 'Slot1'";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error("Error al marcar el slot como desocupado:", err);
+    } else {
+      console.log("Slot1 marcado como desocupado en la base de datos");
+    }
+  })
+  }
+}
 
 parser.on("error", (err) => {
   console.log("Error en la comunicación serial:", err);
