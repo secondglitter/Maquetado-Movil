@@ -19,7 +19,7 @@ app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/slot', slotRoutes);
 
-const port = new SerialPort({
+/* const port = new SerialPort({
   path: '/dev/ttyUSB0',
   baudRate:9600
 });
@@ -70,7 +70,7 @@ function Slot1(ready) {
 parser.on("error", (err) => {
   console.log("Error en la comunicación serial:", err);
 });
-
+*/
 function obtenerRutas(router, prefix = '') {
   const routes = [];
   router.stack.forEach((middleware) => {

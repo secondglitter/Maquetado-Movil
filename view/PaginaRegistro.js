@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 10,
     alignItems: 'center',
-    top:280
+    top:140
   },
   buttonText: {
     fontFamily: 'CustomFont',
