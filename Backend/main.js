@@ -1,25 +1,32 @@
 import express from 'express';
 import http from 'http';
-import { Server } from 'socket.io';
-import { SerialPort } from 'serialport';
-import { DelimiterParser } from '@serialport/parser-delimiter';
+import cors from 'cors';
+import dotenv from 'dotenv';
+// import { Server } from 'socket.io';
+// import { SerialPort } from 'serialport';
+// import { DelimiterParser } from '@serialport/parser-delimiter';
 import chalk from 'chalk';
 import db from "./Connection/db.js"
-
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
-
-// Definir las rutas de tu aplicación
 import userRoutes from './Users/Routes/UserRoutes.js';
 import authRoutes from './Auth/Routes/AuthRoutes.js';
 import slotRoutes from './Slot/Routes/SlotRoutes.js';
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+const server = http.createServer(app);
+
+if(process.env.NODE !== 'production'){
+  dotenv.config();
+}
+
+
 
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/slot', slotRoutes);
 
-/* const port = new SerialPort({
+/*const port = new SerialPort({
   path: '/dev/ttyUSB0',
   baudRate:9600
 });
@@ -69,8 +76,8 @@ function Slot1(ready) {
 
 parser.on("error", (err) => {
   console.log("Error en la comunicación serial:", err);
-});
-*/
+}); */
+
 function obtenerRutas(router, prefix = '') {
   const routes = [];
   router.stack.forEach((middleware) => {
