@@ -50,7 +50,7 @@ User.SearchUser = async(req) => {
   const id = req.params.id;
 
   return new Promise((resolve, reject) => {
-    const query = 'SELECT nombre, matricula FROM users WHERE id = ?';
+    const query = 'SELECT id, nombre, matricula FROM users WHERE id = ?';
 
     db.query(query, [id], (error, results) => {
       if(error){
