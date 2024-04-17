@@ -37,6 +37,7 @@
     "react-native-svg": "^14.1.0",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
+    "serialport": "^12.0.0",
     "twrnc": "^4.0.0",
     "zustand": "^4.5.2"
   },

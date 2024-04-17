@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,21 +8,38 @@ import {
 } from 'react-native';
 import ModalMenu from './Componente/ModalMenu'; 
 import useUserStore from './Auth/AuthGlobal';
+import API_Metods from './API/API';
 
 const CarGif = () => {
   const userData = useUserStore((state) => state.userData);
-    return (
-      <View style={styles.gifContainer}>
-        <Image
-          source={require('../assets/car.gif')} 
-          style={styles.gif}
-          resizeMode="contain" 
-        />
-              <Text style={styles.gifContainer}>Usuario: {userData.nombre}</Text>
-              <Text style={styles.gifContainer}>Matricula: {userData.matricula}</Text>
-      </View>
-    );
-  };
+
+  const FetchData = async () => {
+    try {
+      const response = await API_Metods.Get_Data('/getSlotID', userData.id);
+      console.log(response)
+    } catch (error) {
+      console.error('Error al obtener datos:', error);
+    }
+  }
+
+  useEffect(() => {
+    FetchData();
+    const intervalId = setInterval(FetchData, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  return (
+    <View style={styles.gifContainer}>
+      <Image
+        source={require('../assets/car.gif')} 
+        style={styles.gif}
+        resizeMode="contain" 
+      />
+      <Text style={styles.gifContainer}>Usuario: {userData.nombre}</Text>
+      <Text style={styles.gifContainer}>Matricula: {userData.matricula}</Text>
+    </View>
+  );
+};
 
 const CardInformacion = () => {
   return (
@@ -36,8 +53,6 @@ const CardInformacion = () => {
 
 const ParkingLot = () => {
   const [menuOpen, setMenuOpen] = useState(false); 
-
- 
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -53,9 +68,7 @@ const ParkingLot = () => {
       <Text style={styles.title}>Mi lugar</Text>
       <CarGif />
       <CardInformacion />
-      
       <ModalMenu menuOpen={menuOpen} toggleMenu={toggleMenu} />
-
     </View>
   );
 };
@@ -63,9 +76,9 @@ const ParkingLot = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top:32,
+    top: 32,
     backgroundColor: '#FFFFFF',
-    top:32
+    top: 32
   },
   title: {
     fontSize: 20,
@@ -88,7 +101,6 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 50,
   },
-  
   card: {
     backgroundColor: 'black',
     padding: 25,
@@ -122,9 +134,8 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 25,
     color: 'white',
-    top:17
+    top: 17
   },
-  
 });
 
 export default ParkingLot;
