@@ -1,62 +1,79 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import ModalMenu from './Componente/ModalMenu'; 
+import { View, StyleSheet, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import ModalMenu from './Componente/ModalMenu';
 import useUserStore from './Auth/AuthGlobal';
 import API_Metods from './API/API';
 
 const CarGif = () => {
   const userData = useUserStore((state) => state.userData);
+  const [slotData, setSlotData] = useState(null);
 
   const FetchData = async () => {
     try {
-      const response = await API_Metods.Get_Data('/getSlotID', userData.id);
-      console.log(response)
+      const usuario = userData.id;
+      const response = await API_Metods.Get_Data(`/slot/getSlotID/${usuario}`);
+      console.log(response);
+      setSlotData(response);
     } catch (error) {
       console.error('Error al obtener datos:', error);
     }
-  }
+  };
 
   useEffect(() => {
     FetchData();
-    const intervalId = setInterval(FetchData, 5000);
+    const intervalId = setInterval(FetchData, 1000);
     return () => clearInterval(intervalId);
   }, []);
 
   return (
     <View style={styles.gifContainer}>
       <Image
-        source={require('../assets/car.gif')} 
+        source={require('../assets/car.gif')}
         style={styles.gif}
-        resizeMode="contain" 
+        resizeMode="contain"
       />
-      <Text style={styles.gifContainer}>Usuario: {userData.nombre}</Text>
-      <Text style={styles.gifContainer}>Matricula: {userData.matricula}</Text>
+      <Text style={styles.gifText}>Usuario: {userData.nombre}</Text>
+      <Text style={styles.gifText}>Matricula: {userData.matricula}</Text>
     </View>
   );
 };
 
-const CardInformacion = () => {
+const CardInformacion = ({ slotData }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.cardText}>Información del lugar:</Text>
-      <Text style={styles.cardTextinfo}>Tiempo estacionado: 1hr 30m 3s</Text>
-      <Text style={styles.cardTextinfo}>Lugar asignado: A</Text>
+      <Text style={styles.cardTextinfo}>Tiempo estacionado: {slotData.time_elapsed}</Text>
+      <Text style={styles.cardTextinfo}>Lugar asignado: {slotData.slot_name}</Text>
     </View>
   );
 };
 
 const ParkingLot = () => {
-  const [menuOpen, setMenuOpen] = useState(false); 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [slotData, setSlotData] = useState(null);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    const FetchData = async () => {
+      try {
+        const usuario = userData.id;
+        const response = await API_Metods.Get_Data(`/slot/getSlotID/${usuario}`);
+        console.log(response);
+        setSlotData(response);
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+      }
+    };
+
+    FetchData();
+    const intervalId = setInterval(FetchData, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const userData = useUserStore((state) => state.userData);
 
   return (
     <View style={styles.container}>
@@ -67,7 +84,7 @@ const ParkingLot = () => {
       </TouchableWithoutFeedback>
       <Text style={styles.title}>Mi lugar</Text>
       <CarGif />
-      <CardInformacion />
+      {slotData && <CardInformacion slotData={slotData} />}
       <ModalMenu menuOpen={menuOpen} toggleMenu={toggleMenu} />
     </View>
   );
@@ -78,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     top: 32,
     backgroundColor: '#FFFFFF',
-    top: 32
+    top: 32,
   },
   title: {
     fontSize: 20,
@@ -93,18 +110,22 @@ const styles = StyleSheet.create({
   },
   gifContainer: {
     justifyContent: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
     fontWeight: 'bold',
   },
   gif: {
-    width: 300, 
+    width: 300,
     height: 200,
-    marginBottom: 50,
+    marginBottom: 20,
+  },
+  gifText: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   card: {
     backgroundColor: 'black',
     padding: 25,
-    marginTop: 100,
+    marginTop: 20,
     marginBottom: 20,
     borderRadius: 10,
     borderColor: 'red',
@@ -134,7 +155,7 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 25,
     color: 'white',
-    top: 17
+    top: 17,
   },
 });
 
