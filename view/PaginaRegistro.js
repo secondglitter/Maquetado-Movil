@@ -1,15 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
-import * as Font from 'expo-font';
-import API_Metods from './API/API'
+import React, { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import * as Font from "expo-font";
+import API_Metods from "./API/API";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { LinearGradient } from "expo-linear-gradient";
 
-const customFont = require('../fonts/Jomhuria-Regular.ttf');
+const customFont = require("../fonts/Jomhuria-Regular.ttf");
 
-export default function PaginaRegistro({navigation}) {
+export default function PaginaRegistro({ navigation }) {
   const [fontLoaded, setFontLoaded] = useState(false);
-  const [nombre, setNombre] = useState('');
-  const [matricula, setMatricula] = useState('');
+  const [nombre, setNombre] = useState("");
+  const [matricula, setMatricula] = useState("");
 
   const loadFontAsync = async () => {
     await Font.loadAsync({
@@ -28,45 +39,97 @@ export default function PaginaRegistro({navigation}) {
 
   const HandleRegistro = async () => {
     try {
-      const response = await API_Metods.Data_Post('/users/RegisterUser', {
+      const response = await API_Metods.Data_Post("/users/RegisterUser", {
         nombre,
-        matricula
+        matricula,
       });
-      
-      console.log('Respuesta del servidor:', response);
-      navigation.navigate('PaginaInicio');
+
+      console.log("Respuesta del servidor:", response);
+      navigation.navigate("PaginaInicio");
     } catch (error) {
-      console.error('Error al realizar el registro:', error);
+      console.error("Error al realizar el registro:", error);
     }
   };
-  
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>ParkingSlot</Text>
-      <Image
-        source={require ('../assets/Logo.png')}
-        style={styles.imagen}
-      />
-      <Text style={styles.title}>REGISTRATE</Text>
+      <View style={styles.topImageContainer}>
+        <Image
+          source={require("../assets/topVector.png")}
+          style={styles.topImage}
+        />
+      </View>
+      <View style={styles.titleContainer}>
+        <Text style={styles.ParkingSlotText}>Crear Cuenta</Text>
+      </View>
+      <View style={styles.logoContainer}>
+        <Image
+          source={require("../assets/parkinglogo.png")}
+          style={styles.logoImage}
+        />
+      </View>
+      <View>
+        <Text style={styles.Iniciartext}>Ingresa los datos requeridos.</Text>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <FontAwesome
+          name={"user"}
+          size={24}
+          color={"#9A9A9A"}
+          style={styles.inputIcon}
+        />
         <TextInput
-          style={styles.input}
+          style={styles.textInput}
           placeholder="Nombre"
           value={nombre}
           onChangeText={setNombre}
         />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <MaterialIcons
+          name={"numbers"}
+          size={24}
+          color={"#9A9A9A"}
+          style={styles.inputIcon}
+        />
         <TextInput
-          style={styles.input}
+          style={styles.textInput}
           placeholder="Matricula"
           value={matricula}
           onChangeText={setMatricula}
         />
-         <Text style={styles.Log}>¿Ya tienes cuenta?</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('PaginaInicio')}>
-      <Text style={styles.Log_2}>Inicia Sesion</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button_individual} onPress={HandleRegistro}>
-        <Text style={styles.buttonText}>Registrar</Text>
-      </TouchableOpacity>
+      </View>
+
+      <View style={styles.signInButtonContainer}>
+        <Text style={styles.signIn}>Registrarse</Text>
+        <TouchableOpacity  onPress={HandleRegistro}>
+        <LinearGradient
+          colors={["#EE9D5A", "#FFD1AB"]}
+          style={styles.linearGradient}
+        >
+          <AntDesign name={"arrowright"} size={24} color={"white"} />
+        </LinearGradient>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.footerText}>
+        ¿Ya tienes cuenta?{""}
+        <TouchableOpacity onPress={() => navigation.navigate("PaginaInicio")}>
+          <Text style={{ textDecorationLine: "underline" }}>
+            Ingresa ahora.
+          </Text>
+        </TouchableOpacity>
+      </Text>
+
+      <View style={styles.leftVectorContainer}>
+        <Image
+          source={require("../assets/botomVector.png")}
+          style={styles.leftVectorImage}
+        />
+      </View>
+      
       <StatusBar style="auto" />
     </View>
   );
@@ -75,68 +138,89 @@ export default function PaginaRegistro({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    backgroundColor: "#F6F6F6",
+    position: "relative",
   },
-  text: {
-    fontFamily: 'CustomFont',
-    color: 'white',
-    fontSize: 80,
-    top:70
+
+  topImageContainer: {},
+
+  topImage: {
+    width: "100%",
+    height: 130,
   },
-  Log:{
-    fontFamily: 'CustomFont',
-    color: 'white',
-    fontSize: 40,
-    top:120
+
+  ParkingSlotText: {
+    textAlign: "center",
+    fontSize: 45,
+    fontWeight: "500",
+    color: "#262626",
   },
-  Log_2:{
-    fontFamily: 'CustomFont',
-    color: 'white',
-    fontSize: 40,
-    marginBottom:17,
-    textDecorationLine: 'underline',
-    top:120
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  Iniciartext: {
+    textAlign: "center",
+    fontSize: 18,
+    color: "#262626",
     marginBottom: 20,
-    textAlign: 'center',
-    color: '#fff',
-    top:90
   },
-  input: {
-    height: 40,
-    width: 300,
-    borderWidth: 1,
-    borderColor: '#fff',
-    marginBottom: 10,
-    borderRadius: 10,
-    textAlign: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    top:100
-  },
-  imagen: {
-    marginBottom: 40,
-    width: 120, 
-    height: 120,
-    top:82
-  },
-  button_individual: {
-    backgroundColor: 'white',
-    width: '60%',
+  inputContainer: {
+    backgroundColor: "#FFFFFF",
+    flexDirection: "row",
+    borderRadius: 20,
+    marginHorizontal: 40,
+    elevation: 10,
+    marginVertical: 10,
     padding: 10,
-    marginBottom: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    top:140
+    alignItems: "center",
+    height: 50,
   },
-  buttonText: {
-    fontFamily: 'CustomFont',
-    color: 'black',
+
+  inputIcon: {
+    marginLeft: 15,
+    marginRight: 5,
+  },
+  
+  signInButtonContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+    width: "90%",
+    justifyContent: "flex-end",
+  },
+  signIn: {
+    color: "#262626",
     fontSize: 25,
-  }
+    fontWeight: "bold",
+  },
+
+  linearGradient: {
+    height: 34,
+    width: 56,
+    borderRadius: 17,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 10,
+  },
+  footerText: {
+    color: "#262626",
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: 40,
+  },
+  leftVectorContainer: {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+  },
+
+  leftVectorImage: {
+    height: 200,
+    width: 150,
+  },
+  logoContainer:{
+    position: "fixed",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logoImage:{
+    height: 200,
+    width: 200,
+  },
 });

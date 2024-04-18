@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/getAll', SlotController.GetAll)
 
-router.get('/getSlotID', SlotController.GetSlotID);
+router.get('/getSlotID/:id', SlotController.GetSlotID);
 
 export default router;
 
