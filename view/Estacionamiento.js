@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import ModalMenu from './Componente/ModalMenu'; // Importa el componente ModalMenu desde su ubicación
 import API_Metods from './API/API.js';
@@ -77,6 +77,12 @@ const ParkingLot = () => {
           totalCount={parkingSpaces.length}
         />
       <ModalMenu menuOpen={menuOpen} toggleMenu={toggleMenu} />
+      <View style={styles.topLeftVectorContainer}>
+        <Image
+          source={require("../assets/botomVector.png")}
+          style={styles.topLeftVectorImage}
+        />
+      </View>
     </View>
   );
 };
@@ -84,21 +90,17 @@ const ParkingLot = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    marginTop: 32,
     backgroundColor: '#FFFFFF',
-    top:32
+    paddingTop: 32,
+    paddingHorizontal: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
     textTransform: 'uppercase',
+    color: '#333333',
     textAlign: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    color: 'white',
-    padding: 20,
-    width: '100%',
   },
   contentContainer: {
     flexDirection: 'row',
@@ -173,8 +175,8 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 25,
-    color: 'white',
-    top: 15,
+    color: '#333333',
+    top: 17,
   },
   pavement: {
     position: 'absolute',
@@ -194,6 +196,15 @@ const styles = StyleSheet.create({
   verticalLine: {
     height: '100%',
     width: 2,
+  },
+  topLeftVectorContainer: {
+    position: "fixed",
+    top: 340,
+    right: 40,
+  },
+  topLeftVectorImage: {
+    height: 200,
+    width: 130,
   },
 });
 

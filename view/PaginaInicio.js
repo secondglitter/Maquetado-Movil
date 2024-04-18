@@ -35,14 +35,14 @@ export default function PaginaInicio({ navigation }) {
     loadFontAsync();
   }, []);
 
-  const handleLogin = async () => {
+  /*const handleLogin = async () => {
     const success = await login(nombre, matricula);
     if (success) {
       navigation.navigate("Inicio");
     } else {
       console.log("Hubo un error");
     }
-  };
+  };*/
 
   if (!fontLoaded) {
     return null;
@@ -97,7 +97,7 @@ export default function PaginaInicio({ navigation }) {
 
       <View style={styles.signInButtonContainer}>
         <Text style={styles.signIn}>Iniciar sesión</Text>
-        <TouchableOpacity  onPress={handleLogin}>
+        <TouchableOpacity >
         <LinearGradient
           colors={["#EE9D5A", "#FFD1AB"]}
           style={styles.linearGradient}
@@ -115,17 +115,20 @@ export default function PaginaInicio({ navigation }) {
           </Text>
         </TouchableOpacity>
       </Text>
-
+      <Text style={styles.footerText}>
+        ¿No tienes cuenta?{""}
+        <TouchableOpacity onPress={() => navigation.navigate("Estacionamiento")}>
+          <Text style={{ textDecorationLine: "underline" }}>
+            Crea una.
+          </Text>
+        </TouchableOpacity>
+      </Text>
       <View style={styles.leftVectorContainer}>
         <Image
           source={require("../assets/botomVector.png")}
           style={styles.leftVectorImage}
         />
-      </View>
-
-     
-
-      
+      </View> 
       <StatusBar style="auto" />
     </View>
   );
