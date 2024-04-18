@@ -9,6 +9,20 @@ CREATE TABLE users (
     CardUID VARCHAR(10)
 );
 
+
+
+CREATE TABLE slots (
+    id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+    slot_name VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE test (
+    id CHAR(36) PRIMARY KEY DEFAULT UUID(),
+    texto VARCHAR(255)
+);
+
 CREATE TABLE slot_park (
     id CHAR(36) PRIMARY KEY DEFAULT UUID(),
     slot_id CHAR(36) NOT NULL,
@@ -21,6 +35,9 @@ CREATE TABLE slot_park (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (slot_id) REFERENCES slots(id),
     CHECK (start_time < end_time)
+<<<<<<< HEAD
+);
+=======
 );
 
 CREATE TABLE slots (
@@ -43,3 +60,4 @@ INSERT INTO slot_park (id, slot_id, occupied, user_id, start_time, end_time) VAL
 ('00000000-0000-0000-0000-000000000003', '9b83e0a0-654c-4a95-b5ad-48a6cf684681', false, NULL, '08:00:00', '17:00:00'),
 ('00000000-0000-0000-0000-000000000004', '1a2e0981-c650-4f02-b869-b36452c7ebee', false, NULL, '08:00:00', '17:00:00'),
 ('00000000-0000-0000-0000-000000000005', '8e4e1e5c-fa9e-4b81-a5b1-51a2639d308b', false, NULL, '08:00:00', '17:00:00');
+>>>>>>> 4fb7d1293b00ded1b08e685a8fcdda99180b1e05

@@ -16,11 +16,12 @@ Slot.GetAll = () => {
     });
 }
 
-Slot.GetSlotID = async(id) => {
+Slot.GetSlotID = async(req) => {
+    const id = req.params.id;
     return new Promise((resolve, reject) => {
-        const slotId = id.body.id;
+        console.log(id);
         const query = "SELECT s.slot_name, TIMESTAMPDIFF(SECOND, sp.start_time, sp.end_time) AS time_elapsed FROM slot_park sp INNER JOIN slots s ON sp.slot_id = s.id WHERE sp.user_id = ?";
-        db.query(query, [slotId], (err, results) => {
+        db.query(query, [id], (err, results) => {
             if (err) {
                 console.error("Error al calcular el tiempo transcurrido y obtener el nombre del slot:", err);
                 reject({ error: "Error al calcular el tiempo transcurrido y obtener el nombre del slot" });
@@ -33,5 +34,6 @@ Slot.GetSlotID = async(id) => {
         });
     });
 }
+
 
 export default Slot;
