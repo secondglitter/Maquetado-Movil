@@ -2,14 +2,15 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import { Server } from 'socket.io';
-// import { SerialPort } from 'serialport';
-// import { DelimiterParser } from '@serialport/parser-delimiter';
+import { Server } from 'socket.io';
+import { SerialPort } from 'serialport';
+import { DelimiterParser } from '@serialport/parser-delimiter';
 import chalk from 'chalk';
 import db from "./Connection/db.js"
 import userRoutes from './Users/Routes/UserRoutes.js';
 import authRoutes from './Auth/Routes/AuthRoutes.js';
 import slotRoutes from './Slot/Routes/SlotRoutes.js';
+import { error } from 'console';
 
 const app = express();
 app.use(cors());
@@ -26,8 +27,8 @@ app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/slot', slotRoutes);
 
-/*const port = new SerialPort({
-  path: '/dev/ttyUSB0',
+const port = new SerialPort({
+  path: '/dev/ttyACM1',
   baudRate:9600
 });
 const parser = port.pipe(new DelimiterParser({ delimiter: '\r\n' }));
@@ -42,41 +43,84 @@ parser.on('data', (data) => {
   const ready = decoder.decode(dataArray);
   console.log('Datos recibidos desde Arduino:', ready);
 
-  switch (ready) {
-    case "Slot1":
-        Slot1(ready);
-      break;
-  
-    default:
-      break;
+  function SlotDes(Slot){
+    const query = "UPDATE slot_park SET occupied = 0, user_id = NULL WHERE slot_id = ?"
+      db.query(query, [Slot], (error, data) => {
+        if(error){
+          console.error("Esto es un error", error);
+        } else {
+          console.log("Satisfactorio", data);
+        }
+      })
   }
-})
 
-function Slot1(ready) {
-  if(ready === "Ocupado") {
-  const sql = "UPDATE slot_park SET occupied = 1 WHERE slot_name = 'Slot1'";
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error("Error al marcar el slot como ocupado:", err);
-    } else {
-      console.log("Slot1 marcado como ocupado en la base de datos");
-    }
-  })
-  } else {
-    const sql = "UPDATE slot_park SET occupied = 0 WHERE slot_name = 'Slot1'";
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error("Error al marcar el slot como desocupado:", err);
-    } else {
-      console.log("Slot1 marcado como desocupado en la base de datos");
-    }
-  })
+  function SlotAct(Slot, id_usuario){
+    const query = "UPDATE slot_park SET occupied = 1, user_id = ? WHERE slot_id = ?"
+    db.query(query, [id_usuario, Slot], (error, data) => {
+      if(error){
+        console.error("Esto es un error", error);
+      } else {
+        console.log("Satisfactorio", data);
+      }
+    })
   }
-}
+
+  if(ready === "Slot 1 desocupado."){
+    const Slot = "a1e3f5d8-9072-4c7f-a109-bd39a8e377f1";
+    SlotDes(Slot);
+
+  } else if( ready === "Slot 2 desocupado.") {
+    const Slot = "fd64c95c-f1d1-44d4-bb53-3fa717f2446c";
+    SlotDes(Slot);
+
+  } else if (ready === "Slot 3 desocupado."){
+    const Slot = "9b83e0a0-654c-4a95-b5ad-48a6cf684681";
+    SlotDes(Slot);
+
+  } else if (ready === "Slot 4 desocupado.") {
+    const Slot = "1a2e0981-c650-4f02-b869-b36452c7ebee";
+    SlotDes(Slot);
+
+  } else if (ready === "Slot 5 desocupado.") {
+    const Slot = "8e4e1e5c-fa9e-4b81-a5b1-51a2639d308b";
+    SlotDes(Slot);
+
+  } else if( ready === "Slot 1 ocupado por UID 93364f13"){
+    const user_id = "551fea93-f9cd-11ee-9c0d-fdc6ea3f7ebb";
+    const Slot = "a1e3f5d8-9072-4c7f-a109-bd39a8e377f1";
+    SlotAct(Slot, user_id);
+
+  } else if( ready === "Slot 2 ocupado por UID 8ed48314"){
+      const user_id = "ca1e0270-fcfb-11ee-9995-f6a764fdcbfe";
+      const Slot = "fd64c95c-f1d1-44d4-bb53-3fa717f2446c";
+      SlotAct(Slot, user_id);
+    
+  } else if( ready === "Slot 3 ocupado por UID d3288c0f"){
+      const user_id = "a7d0f377-fcfb-11ee-9995-f6a764fdcbfe";
+      const Slot = "9b83e0a0-654c-4a95-b5ad-48a6cf684681";
+      SlotAct(Slot, user_id);
+  
+  } else if( ready === "Slot 4 ocupado por UID 6381890f"){
+      const user_id = "b8c5b5da-fcfb-11ee-9995-f6a764fdcbfe";
+      const Slot = "1a2e0981-c650-4f02-b869-b36452c7ebee";
+      SlotAct(Slot, user_id);  
+
+  } else if( ready === "Slot 5 ocupado por UID 636bf2f4"){
+      const user_id = "b8a47fc1-fcfd-11ee-9995-f6a764fdcbfe";
+      const Slot = "8e4e1e5c-fa9e-4b81-a5b1-51a2639d308b";
+      SlotAct(Slot, user_id);  
+
+  } else {
+    console.log("Todavia");
+  }
+
+
+});
+
 
 parser.on("error", (err) => {
   console.log("Error en la comunicación serial:", err);
-}); */
+});
 
 function obtenerRutas(router, prefix = '') {
   const routes = [];
