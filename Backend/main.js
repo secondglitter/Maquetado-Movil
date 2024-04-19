@@ -28,7 +28,7 @@ app.use('/auth', authRoutes);
 app.use('/slot', slotRoutes);
 
 const port = new SerialPort({
-  path: '/dev/ttyACM1',
+  path: 'COM7',
   baudRate:9600
 });
 const parser = port.pipe(new DelimiterParser({ delimiter: '\r\n' }));

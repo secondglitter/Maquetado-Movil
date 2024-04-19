@@ -32,18 +32,20 @@ const CarGif = () => {
         style={styles.gif}
         resizeMode="contain"
       />
-      <Text style={styles.gifText}>Usuario: {userData.nombre}</Text>
-      <Text style={styles.gifText}>Matricula: {userData.matricula}</Text>
+      <View style={styles.userInfo}>
+        <Text style={styles.userInfoText}>Usuario: {userData.nombre}</Text>
+        <Text style={styles.userInfoText}>Matrícula: {userData.matricula}</Text>
+      </View>
     </View>
+
   );
 };
 
 const CardInformacion = ({ slotData }) => {
   return (
     <View style={styles.card}>
-      <Text style={styles.cardText}>Información del lugar:</Text>
-      <Text style={styles.cardTextinfo}>Tiempo estacionado: {slotData.time_elapsed}</Text>
-      <Text style={styles.cardTextinfo}>Lugar asignado: {slotData.slot_name}</Text>
+      <Text style={styles.cardTitle}>Información del lugar:</Text>
+      <Text style={styles.cardText}>Lugar asignado: {slotData.slot_name}</Text>
     </View>
   );
 };
@@ -55,7 +57,6 @@ const ParkingLot = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
   useEffect(() => {
     const FetchData = async () => {
       try {
@@ -86,65 +87,79 @@ const ParkingLot = () => {
       <CarGif />
       {slotData && <CardInformacion slotData={slotData} />}
       <ModalMenu menuOpen={menuOpen} toggleMenu={toggleMenu} />
+      <View style={styles.leftVectorContainer}>
+        <Image
+          source={require("../assets/botomVector.png")}
+          style={styles.leftVectorImage}
+        />
+      </View>
     </View>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 32,
     backgroundColor: '#FFFFFF',
-    top: 32,
+    paddingTop: 32,
+    paddingHorizontal: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
+    marginTop:20,
     textTransform: 'uppercase',
+    color: '#333333',
     textAlign: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    color: 'white',
-    padding: 20,
-    width: '100%',
   },
   gifContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
-    fontWeight: 'bold',
+    marginBottom: 20,
   },
   gif: {
+    marginTop: 140,
     width: 300,
     height: 200,
-    marginBottom: 20,
   },
-  gifText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  userInfo: {
+    backgroundColor: '#F0F0F0',
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  leftVectorContainer: {
+    position: "fixed",
+    top: 50,
+    right: 40,
+  },
+  leftVectorImage: {
+    height: 200,
+    width: 130,
+  },
+  userInfoText: {
+    fontSize: 16,
+    color: '#333333',
+    marginBottom: 5,
   },
   card: {
-    backgroundColor: 'black',
-    padding: 25,
-    marginTop: 20,
-    marginBottom: 20,
+    backgroundColor: '#F0F0F0',
+    padding: 20,
     borderRadius: 10,
-    borderColor: 'red',
-    borderWidth: 2,
-    justifyContent: 'flex-start',
-    shadowColor: '#FF0000',
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.9,
-    shadowRadius: 5,
-    elevation: 5,
+    marginBottom: 20,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333333',
   },
   cardText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  cardTextinfo: {
-    color: 'white',
-    fontSize: 18,
+    fontSize: 16,
+    color: '#333333',
+    marginBottom: 5,
   },
   menuIcon: {
     position: 'absolute',
@@ -154,8 +169,8 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 25,
-    color: 'white',
-    top: 17,
+    color: '#333333',
+    top: 45,
   },
 });
 
