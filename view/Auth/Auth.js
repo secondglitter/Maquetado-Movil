@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
         return false;
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
       return false;
     }
   };

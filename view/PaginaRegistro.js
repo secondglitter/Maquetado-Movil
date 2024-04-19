@@ -1,41 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
-import * as Font from "expo-font";
+import { StatusBar, View, Text, Modal, TouchableOpacity, StyleSheet, Image, TextInput } from "react-native";
 import API_Metods from "./API/API";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
 
-const customFont = require("../fonts/Jomhuria-Regular.ttf");
 
 export default function PaginaRegistro({ navigation }) {
-  const [fontLoaded, setFontLoaded] = useState(false);
   const [nombre, setNombre] = useState("");
   const [matricula, setMatricula] = useState("");
-
-  const loadFontAsync = async () => {
-    await Font.loadAsync({
-      CustomFont: customFont,
-    });
-    setFontLoaded(true);
-  };
-
-  useEffect(() => {
-    loadFontAsync();
-  }, []);
-
-  if (!fontLoaded) {
-    return null;
-  }
+  const [modalVisible, setModalVisible] = useState(false);
 
   const HandleRegistro = async () => {
     try {
@@ -44,8 +19,11 @@ export default function PaginaRegistro({ navigation }) {
         matricula,
       });
 
-      console.log("Respuesta del servidor:", response);
-      navigation.navigate("PaginaInicio");
+      if (response === "Este usuario ya existe") {
+        setModalVisible(true);
+      } else {
+        navigation.navigate("PaginaInicio");
+      }
     } catch (error) {
       console.error("Error al realizar el registro:", error);
     }
@@ -117,7 +95,7 @@ export default function PaginaRegistro({ navigation }) {
       <Text style={styles.footerText}>
         ¿Ya tienes cuenta?{""}
         <TouchableOpacity onPress={() => navigation.navigate("PaginaInicio")}>
-          <Text style={{ textDecorationLine: "underline" }}>
+          <Text style={{ top:2,marginLeft:5, textDecorationLine: "underline" }}>
             Ingresa ahora.
           </Text>
         </TouchableOpacity>
@@ -129,6 +107,29 @@ export default function PaginaRegistro({ navigation }) {
           style={styles.leftVectorImage}
         />
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Ya existe un usuario con esa matrícula.</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.modalButton}>Cerrar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       
       <StatusBar style="auto" />
     </View>
@@ -150,6 +151,7 @@ const styles = StyleSheet.create({
   },
 
   ParkingSlotText: {
+    marginTop: 30,
     textAlign: "center",
     fontSize: 45,
     fontWeight: "500",
@@ -222,5 +224,25 @@ const styles = StyleSheet.create({
   logoImage:{
     height: 200,
     width: 200,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  modalButton: {
+    fontSize: 16,
+    color: "#007BFF",
   },
 });
