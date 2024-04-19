@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Modal
 } from "react-native";
 import * as Font from "expo-font";
 import { useAuth } from "../view/Auth/Auth";
@@ -16,37 +17,24 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
 
 
-const customFont = require("../fonts/Jomhuria-Regular.ttf");
-
 export default function PaginaInicio({ navigation }) {
   const { login } = useAuth();
-  const [fontLoaded, setFontLoaded] = useState(false);
   const [nombre, setNombre] = useState("");
   const [matricula, setMatricula] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const loadFontAsync = async () => {
-    await Font.loadAsync({
-      CustomFont: customFont,
-    });
-    setFontLoaded(true);
-  };
-
-  React.useEffect(() => {
-    loadFontAsync();
-  }, []);
 
   const handleLogin = async () => {
     const success = await login(nombre, matricula);
-    if (success) {
+    console.log(success);
+
+    if(success === true) {
       navigation.navigate("Inicio");
     } else {
-      console.log("Hubo un error");
+      setModalVisible(true);
     }
   };
 
-  if (!fontLoaded) {
-    return null;
-  }
 
   return (
     <View style={styles.container}>
@@ -97,7 +85,7 @@ export default function PaginaInicio({ navigation }) {
 
       <View style={styles.signInButtonContainer}>
         <Text style={styles.signIn}>Iniciar sesión</Text>
-        <TouchableOpacity  onPress={handleLogin}>
+        <TouchableOpacity onPress={handleLogin} >
         <LinearGradient
           colors={["#EE9D5A", "#FFD1AB"]}
           style={styles.linearGradient}
@@ -110,22 +98,39 @@ export default function PaginaInicio({ navigation }) {
       <Text style={styles.footerText}>
         ¿No tienes cuenta?{""}
         <TouchableOpacity onPress={() => navigation.navigate("PaginaRegistro")}>
-          <Text style={{ textDecorationLine: "underline" }}>
+        <Text style={{ top:2,marginLeft:5, textDecorationLine: "underline" }}>
             Crea una.
           </Text>
         </TouchableOpacity>
       </Text>
-
       <View style={styles.leftVectorContainer}>
         <Image
           source={require("../assets/botomVector.png")}
           style={styles.leftVectorImage}
         />
-      </View>
+      </View> 
 
-     
-
-      
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Comprueba tus creedenciales</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.modalButton}>Cerrar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <StatusBar style="auto" />
     </View>
   );
@@ -218,5 +223,25 @@ const styles = StyleSheet.create({
   logoImage:{
     height: 200,
     width: 200,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  modalButton: {
+    fontSize: 16,
+    color: "#007BFF",
   },
 });

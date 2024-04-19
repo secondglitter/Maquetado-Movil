@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "http://192.168.12.19:4000"
+    baseURL: "http://192.168.100.74:4000"
 });
 
 const API_Metods = {
@@ -15,7 +15,7 @@ const API_Metods = {
                 console.log('Error en el endpoint, no existe');
             }
         } catch (error) {
-            console.error(error)
+            console.log(error)
         }
     },
 
@@ -28,7 +28,7 @@ const API_Metods = {
                 console.log('Error en tu endpoint, no existe');
             }
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
     },
 
@@ -41,7 +41,7 @@ const API_Metods = {
                 console.log('Error en tu endpoint, no existe');
             }
         } catch (error) {
-            console.error(error)
+            console.log(error)
         }
     },
 
@@ -54,7 +54,7 @@ const API_Metods = {
                 console.log('Error en tu endpoint, no existe');
             }
         } catch (error) {
-            console.error(error);   
+            console.log(error);   
         }
     },
     async Patch_Data(endpoint, data) {
@@ -66,7 +66,7 @@ const API_Metods = {
                 console.log('Error en tu endpoint, no existe');
             }
         } catch (error) {
-            console.error(error)
+            console.log(error)
         }
     }    
 }
